@@ -9,12 +9,23 @@ WIDTH, HEIGHT = 400, 600
 GRID_SIZE = 25
 
 # Colors
+
+#neutrals
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+EGGSHELL = (254, 255, 245)
+COOL_BLACK = (42, 43, 46)
+
+#rgb
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
-COLORS = [RED, BLUE, GREEN]
+
+#pastels
+BABY_PINK = (255, 204, 204)
+LAVENDER = (190, 183, 232)
+SAGE = (199, 232, 183)
+COLORS = [BABY_PINK, LAVENDER, SAGE]
 
 # Tetromino shapes
 SHAPES = [
@@ -132,7 +143,7 @@ class Tetris:
         return Tetromino(self.width // 2, 0, shape)
 
     def valid_move(self, piece, x, y, rotation):
-        """Check if the piece can move to the given position"""
+        # Check if the piece can move to the given position
         for i, row in enumerate(piece.shape[(piece.rotation + rotation) % len(piece.shape)]):
             for j, cell in enumerate(row):
                 try:
@@ -143,7 +154,7 @@ class Tetris:
         return True
 
     def clear_lines(self):
-        """Clear the lines that are full and return the number of cleared lines"""
+        # Clear the lines that are full and return the number of cleared lines
         lines_cleared = 0
         for i, row in enumerate(self.grid[:-1]):
             if all(cell != 0 for cell in row):
@@ -153,7 +164,7 @@ class Tetris:
         return lines_cleared
 
     def lock_piece(self, piece):
-        """Lock the piece in place and create a new piece"""
+        # Lock the piece in place and create a new piece
         for i, row in enumerate(piece.shape[piece.rotation % len(piece.shape)]):
             for j, cell in enumerate(row):
                 if cell == 'O':
@@ -169,7 +180,7 @@ class Tetris:
         return lines_cleared
 
     def update(self):
-        """Move the tetromino down one cell"""
+        # Move the tetromino down one cell
         if not self.game_over:
             if self.valid_move(self.current_piece, 0, 1, 0):
                 self.current_piece.y += 1
@@ -177,7 +188,7 @@ class Tetris:
                 self.lock_piece(self.current_piece)
 
     def draw(self, screen):
-        """Draw the grid and the current piece"""
+        # Draw the grid and the current piece
         for y, row in enumerate(self.grid):
             for x, cell in enumerate(row):
                 if cell:
@@ -191,16 +202,16 @@ class Tetris:
 
 
 def draw_score(screen, score, x, y):
-    """Draw the score on the screen"""
+    # Draw the score on the screen
     font = pygame.font.Font(None, 36)
-    text = font.render(f"Score: {score}", True, WHITE)
+    text = font.render(f"Score: {score}", True, EGGSHELL)
     screen.blit(text, (x, y))
     
     
 def draw_game_over(screen, x, y):
-    """Draw the game over text on the screen"""
+    # Draw the game over text on the screen
     font = pygame.font.Font(None, 48)
-    text = font.render("Game Over", True, RED)
+    text = font.render("Game Over", True, BABY_PINK)
     screen.blit(text, (x, y))
 
 
@@ -216,7 +227,7 @@ def main():
     fall_speed = 50  # You can adjust this value to change the falling speed, it's in milliseconds
     while True:
         # Fill the screen with black
-        screen.fill(BLACK) 
+        screen.fill(COOL_BLACK) 
         for event in pygame.event.get():
             # Check for the QUIT event
             if event.type == pygame.QUIT:
